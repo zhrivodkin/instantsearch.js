@@ -59,7 +59,8 @@ menu({
   [ transformData.{item} ],
   [ autoHideContainer ],
   [ showMore.{templates: {active, inactive}, limit} ],
-  [ collapsible=false ]
+  [ collapsible=false ],
+  [ renderer ],
 })`;
 function menu({
     container,
@@ -72,6 +73,7 @@ function menu({
     transformData,
     autoHideContainer = true,
     showMore = false,
+    renderer,
   } = {}) {
   const showMoreConfig = getShowMoreConfig(showMore);
   if (showMoreConfig && showMoreConfig.limit < limit) {
@@ -84,10 +86,6 @@ function menu({
   }
 
   const containerNode = getContainerNode(container);
-  let RefinementList = headerFooterHOC(RefinementListComponent);
-  if (autoHideContainer === true) {
-    RefinementList = autoHideContainerHOC(RefinementList);
-  }
 
   // we use a hierarchicalFacet for the menu because that's one of the use cases
   // of hierarchicalFacet: a flat menu
@@ -111,8 +109,9 @@ function menu({
     count: cx(bem('count'), userCssClasses.count),
   };
 
-  return {
-    getConfiguration: configuration => {
+  const baseWidget = {
+    renderFn: renderer || defaultRendering,
+    getConfiguration(configuration) {
       const widgetConfiguration = {
         hierarchicalFacets: [{
           name: hierarchicalFacetName,
@@ -136,6 +135,26 @@ function menu({
       this._toggleRefinement = facetValue => helper
         .toggleRefinement(hierarchicalFacetName, facetValue)
         .search();
+
+      // Bind createURL to this specific attribute
+      function _createURL(facetValue) {
+        return createURL(helper.state.toggleRefinement(attributeName, facetValue));
+      }
+
+      this.renderFn({
+        collapsible,
+        createURL: _createURL,
+        cssClasses,
+        facetValues: [],
+        widgetMaxValuesPerFacet,
+        limit,
+        shouldAutoHideContainer: true,
+        showMore: showMoreConfig !== null,
+        templateProps: this._templateProps,
+        toggleRefinement: this._toggleRefinement,
+        containerNode,
+        autoHideContainer,
+      }, true);
     },
     _prepareFacetValues(facetValues, state) {
       return facetValues
@@ -153,23 +172,60 @@ function menu({
         return createURL(state.toggleRefinement(attributeName, facetValue));
       }
 
-      ReactDOM.render(
-        <RefinementList
-          collapsible={collapsible}
-          createURL={_createURL}
-          cssClasses={cssClasses}
-          facetValues={facetValues}
-          limitMax={widgetMaxValuesPerFacet}
-          limitMin={limit}
-          shouldAutoHideContainer={facetValues.length === 0}
-          showMore={showMoreConfig !== null}
-          templateProps={this._templateProps}
-          toggleRefinement={this._toggleRefinement}
-        />,
-        containerNode
-      );
+      this.renderFn({
+        collapsible,
+        createURL: _createURL,
+        cssClasses,
+        facetValues,
+        widgetMaxValuesPerFacet,
+        limit,
+        shouldAutoHideContainer: facetValues.length === 0,
+        showMore: showMoreConfig !== null,
+        templateProps: this._templateProps,
+        toggleRefinement: this._toggleRefinement,
+        containerNode,
+        autoHideContainer,
+      }, false);
     },
   };
+
+  return baseWidget;
+}
+
+function defaultRendering({
+  collapsible,
+  createURL,
+  cssClasses,
+  facetValues,
+  widgetMaxValuesPerFacet,
+  limit,
+  shouldAutoHideContainer,
+  showMore,
+  templateProps,
+  toggleRefinement,
+  containerNode,
+  autoHideContainer,
+}) {
+  let RefinementList = headerFooterHOC(RefinementListComponent);
+  if (autoHideContainer === true) {
+    RefinementList = autoHideContainerHOC(RefinementList);
+  }
+
+  ReactDOM.render(
+    <RefinementList
+      collapsible={collapsible}
+      createURL={createURL}
+      cssClasses={cssClasses}
+      facetValues={facetValues}
+      limitMax={widgetMaxValuesPerFacet}
+      limitMin={limit}
+      shouldAutoHideContainer={shouldAutoHideContainer}
+      showMore={showMore}
+      templateProps={templateProps}
+      toggleRefinement={toggleRefinement}
+    />,
+    containerNode
+  );
 }
 
 export default menu;
