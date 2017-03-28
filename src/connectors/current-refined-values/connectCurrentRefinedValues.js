@@ -3,7 +3,6 @@ import isBoolean from 'lodash/isBoolean';
 import isString from 'lodash/isString';
 import isArray from 'lodash/isArray';
 import isPlainObject from 'lodash/isPlainObject';
-import isFunction from 'lodash/isFunction';
 import isEmpty from 'lodash/isEmpty';
 
 import map from 'lodash/map';
@@ -57,8 +56,6 @@ Full documentation available at https://community.algolia.com/instantsearch.js/c
  * @typedef {Object} CurrentRefinedValuesAttributes
  * @property {string} name mandatory field which is the name of the attribute
  * @property {string} label the label to apply on a refinement per attribute
- * @property {string|function} template the template to apply
- * @property {function} transformData function to transform the content of the refinement before rendering the template
  */
 
 /**
@@ -89,9 +86,7 @@ export default function connectCurrentRefinedValues(renderFn) {
           res &&
             isPlainObject(val) &&
             isString(val.name) &&
-            (isUndefined(val.label) || isString(val.label)) &&
-            (isUndefined(val.template) || isString(val.template) || isFunction(val.template)) &&
-            (isUndefined(val.transformData) || isFunction(val.transformData)),
+            (isUndefined(val.label) || isString(val.label)),
         true);
 
     const showUsage = false ||

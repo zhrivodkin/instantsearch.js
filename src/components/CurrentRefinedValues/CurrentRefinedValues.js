@@ -1,14 +1,14 @@
 import React from 'react';
-
-import Template from '../Template.js';
-
-import headerFooterHOC from '../../decorators/headerFooter.js';
-import autoHideContainerHOC from '../../decorators/autoHideContainer';
-
-import {isSpecialClick} from '../../lib/utils.js';
 import map from 'lodash/map';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
+import isString from 'lodash/isString';
+import isFunction from 'lodash/isFunction';
+
+import Template from '../Template.js';
+import headerFooterHOC from '../../decorators/headerFooter.js';
+import autoHideContainerHOC from '../../decorators/autoHideContainer';
+import {isSpecialClick} from '../../lib/utils.js';
 
 export class RawCurrentRefinedValues extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -68,16 +68,17 @@ export class RawCurrentRefinedValues extends React.Component {
 }
 
 function getCustomTemplateProps(attribute) {
-  const customTemplateProps = {};
-  if (attribute.template !== undefined) {
-    customTemplateProps.templates = {
-      item: attribute.template,
-    };
+  const templateProps = {};
+
+  if (isString(attribute.template) || isFunction(attribute.template)) {
+    templateProps.templates = {item: attribute.template};
   }
-  if (attribute.transformData !== undefined) {
-    customTemplateProps.transformData = attribute.transformData;
+
+  if (isFunction(attribute.transformData)) {
+    templateProps.transformData = attribute.transformData;
   }
-  return customTemplateProps;
+
+  return templateProps;
 }
 
 function getTemplateData(attribute, _refinement, cssClasses) {
