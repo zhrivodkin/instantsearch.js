@@ -22,10 +22,13 @@ const renderer = ({
   renderState,
   transformData,
   templates,
-}) => (
-  { createURL, instantSearchInstance, refine, items, hasNoResults },
-  isFirstRendering
-) => {
+}) => ({
+  createURL,
+  instantSearchInstance,
+  refine,
+  items,
+  hasNoResults,
+}, isFirstRendering) => {
   if (isFirstRendering) {
     renderState.templateProps = prepareTemplateProps({
       transformData,
@@ -129,18 +132,16 @@ numericRefinementList({
  *   })
  * );
  */
-export default function numericRefinementList(
-  {
-    container,
-    attributeName,
-    options,
-    cssClasses: userCssClasses = {},
-    templates = defaultTemplates,
-    collapsible = false,
-    transformData,
-    autoHideContainer = true,
-  } = {}
-) {
+export default function numericRefinementList({
+  container,
+  attributeName,
+  options,
+  cssClasses: userCssClasses = {},
+  templates = defaultTemplates,
+  collapsible = false,
+  transformData,
+  autoHideContainer = true,
+} = {}) {
   if (!container || !attributeName || !options) {
     throw new Error(usage);
   }
@@ -169,10 +170,8 @@ export default function numericRefinementList(
     templates,
   });
   try {
-    const makeNumericRefinementList = connectNumericRefinementList(
-      specializedRenderer
-    );
-    return makeNumericRefinementList({ attributeName, options });
+    const makeNumericRefinementList = connectNumericRefinementList(specializedRenderer);
+    return makeNumericRefinementList({attributeName, options});
   } catch (e) {
     throw new Error(usage);
   }

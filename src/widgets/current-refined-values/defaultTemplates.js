@@ -1,11 +1,10 @@
 export default {
   header: '',
-  item:
-    '' +
+  item: '' +
     '{{#label}}' +
-    '{{label}}' +
-    '{{^operator}}:{{/operator}}' +
-    ' ' +
+      '{{label}}' +
+      '{{^operator}}:{{/operator}}' +
+      ' ' +
     '{{/label}}' +
     '{{#operator}}{{{displayOperator}}} {{/operator}}' +
     '{{#exclude}}-{{/exclude}}' +

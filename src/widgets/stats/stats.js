@@ -22,18 +22,15 @@ const renderer = ({
   renderState,
   templates,
   transformData,
-}) => (
-  {
-    hitsPerPage,
-    nbHits,
-    nbPages,
-    page,
-    processingTimeMS,
-    query,
-    instantSearchInstance,
-  },
-  isFirstRendering
-) => {
+}) => ({
+  hitsPerPage,
+  nbHits,
+  nbPages,
+  page,
+  processingTimeMS,
+  query,
+  instantSearchInstance,
+}, isFirstRendering) => {
   if (isFirstRendering) {
     renderState.templateProps = prepareTemplateProps({
       transformData,
@@ -131,16 +128,14 @@ stats({
  *   })
  * );
  */
-export default function stats(
-  {
-    container,
-    cssClasses: userCssClasses = {},
-    autoHideContainer = true,
-    collapsible = false,
-    transformData,
-    templates = defaultTemplates,
-  } = {}
-) {
+export default function stats({
+  container,
+  cssClasses: userCssClasses = {},
+  autoHideContainer = true,
+  collapsible = false,
+  transformData,
+  templates = defaultTemplates,
+} = {}) {
   if (!container) {
     throw new Error(usage);
   }

@@ -25,19 +25,16 @@ const renderer = ({
   templates,
   transformData,
   showMoreConfig,
-}) => (
-  {
-    refine,
-    items,
-    createURL,
-    canRefine,
-    instantSearchInstance,
-    isShowingMore,
-    toggleShowMore,
-    canToggleShowMore,
-  },
-  isFirstRendering
-) => {
+}) => ({
+  refine,
+  items,
+  createURL,
+  canRefine,
+  instantSearchInstance,
+  isShowingMore,
+  toggleShowMore,
+  canToggleShowMore,
+}, isFirstRendering) => {
   if (isFirstRendering) {
     renderState.templateProps = prepareTemplateProps({
       transformData,
@@ -48,25 +45,22 @@ const renderer = ({
     return;
   }
 
-  const facetValues = items.map(facetValue => ({
-    ...facetValue,
-    url: createURL(facetValue.name),
-  }));
+  const facetValues = items.map(facetValue => ({...facetValue, url: createURL(facetValue.name)}));
   const shouldAutoHideContainer = autoHideContainer && !canRefine;
 
   ReactDOM.render(
     <RefinementList
-      collapsible={collapsible}
-      createURL={createURL}
-      cssClasses={cssClasses}
-      facetValues={facetValues}
-      shouldAutoHideContainer={shouldAutoHideContainer}
-      showMore={showMoreConfig !== null}
-      templateProps={renderState.templateProps}
-      toggleRefinement={refine}
-      toggleShowMore={toggleShowMore}
-      isShowingMore={isShowingMore}
-      canToggleShowMore={canToggleShowMore}
+      collapsible={ collapsible }
+      createURL={ createURL }
+      cssClasses={ cssClasses }
+      facetValues={ facetValues }
+      shouldAutoHideContainer={ shouldAutoHideContainer }
+      showMore={ showMoreConfig !== null }
+      templateProps={ renderState.templateProps }
+      toggleRefinement={ refine }
+      toggleShowMore={ toggleShowMore }
+      isShowingMore={ isShowingMore }
+      canToggleShowMore={ canToggleShowMore }
     />,
     containerNode
   );
@@ -179,12 +173,9 @@ export default function menu({
 
   const containerNode = getContainerNode(container);
 
-  const showMoreLimit = (showMoreConfig && showMoreConfig.limit) || undefined;
-  const showMoreTemplates =
-    showMoreConfig && prefixKeys('show-more-', showMoreConfig.templates);
-  const allTemplates = showMoreTemplates
-    ? { ...templates, ...showMoreTemplates }
-    : templates;
+  const showMoreLimit = showMoreConfig && showMoreConfig.limit || undefined;
+  const showMoreTemplates = showMoreConfig && prefixKeys('show-more-', showMoreConfig.templates);
+  const allTemplates = showMoreTemplates ? {...templates, ...showMoreTemplates} : templates;
 
   const cssClasses = {
     root: cx(bem(null), userCssClasses.root),
@@ -211,7 +202,7 @@ export default function menu({
 
   try {
     const makeWidget = connectMenu(specializedRenderer);
-    return makeWidget({ attributeName, limit, sortBy, showMoreLimit });
+    return makeWidget({attributeName, limit, sortBy, showMoreLimit});
   } catch (e) {
     throw new Error(usage);
   }

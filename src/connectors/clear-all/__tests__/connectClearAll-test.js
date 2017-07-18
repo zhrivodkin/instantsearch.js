@@ -7,7 +7,7 @@ import connectClearAll from '../connectClearAll.js';
 
 describe('connectClearAll', () => {
   it('Renders during init and render', () => {
-    const helper = jsHelper({ addAlgoliaAgent: () => {} });
+    const helper = jsHelper({addAlgoliaAgent: () => {}});
     helper.search = sinon.stub();
     // test that the dummyRendering is called with the isFirstRendering
     // flag set accordingly
@@ -58,16 +58,14 @@ describe('connectClearAll', () => {
     // test the function received by the rendering function
     // to clear the refinements
 
-    const helper = jsHelper({ addAlgoliaAgent: () => {} }, '', {
-      facets: ['myFacet'],
-    });
+    const helper = jsHelper({addAlgoliaAgent: () => {}}, '', {facets: ['myFacet']});
     helper.search = sinon.stub();
     helper.setQuery('not empty');
     helper.toggleRefinement('myFacet', 'myValue');
 
     const rendering = sinon.stub();
     const makeWidget = connectClearAll(rendering);
-    const widget = makeWidget({ clearsQuery: false });
+    const widget = makeWidget({clearsQuery: false});
 
     widget.init({
       helper,
@@ -105,16 +103,14 @@ describe('connectClearAll', () => {
     // test the function received by the rendering function
     // to clear the refinements
 
-    const helper = jsHelper({ addAlgoliaAgent: () => {} }, '', {
-      facets: ['myFacet'],
-    });
+    const helper = jsHelper({addAlgoliaAgent: () => {}}, '', {facets: ['myFacet']});
     helper.search = sinon.stub();
     helper.setQuery('a query');
     helper.toggleRefinement('myFacet', 'myValue');
 
     const rendering = sinon.stub();
     const makeWidget = connectClearAll(rendering);
-    const widget = makeWidget({ clearsQuery: true });
+    const widget = makeWidget({clearsQuery: true});
 
     widget.init({
       helper,
@@ -152,9 +148,7 @@ describe('connectClearAll', () => {
   it('some refinements from results <=> hasRefinements = true', () => {
     // test if the values sent to the rendering function
     // are consistent with the search state
-    const helper = jsHelper({ addAlgoliaAgent: () => {} }, undefined, {
-      facets: ['aFacet'],
-    });
+    const helper = jsHelper({addAlgoliaAgent: () => {}}, undefined, {facets: ['aFacet']});
     helper.toggleRefinement('aFacet', 'some value');
     helper.search = sinon.stub();
 
@@ -184,9 +178,7 @@ describe('connectClearAll', () => {
   it('(clearsQuery: true) query not empty <=> hasRefinements = true', () => {
     // test if the values sent to the rendering function
     // are consistent with the search state
-    const helper = jsHelper({ addAlgoliaAgent: () => {} }, undefined, {
-      facets: ['aFacet'],
-    });
+    const helper = jsHelper({addAlgoliaAgent: () => {}}, undefined, {facets: ['aFacet']});
     helper.setQuery('no empty');
     helper.search = sinon.stub();
 
@@ -219,13 +211,13 @@ describe('connectClearAll', () => {
     // test if the values sent to the rendering function
     // are consistent with the search state
 
-    const helper = jsHelper({ addAlgoliaAgent: () => {} });
+    const helper = jsHelper({addAlgoliaAgent: () => {}});
     helper.setQuery('not empty');
     helper.search = sinon.stub();
 
     const rendering = sinon.stub();
     const makeWidget = connectClearAll(rendering);
-    const widget = makeWidget({ clearsQuery: false });
+    const widget = makeWidget({clearsQuery: false});
 
     widget.init({
       helper,

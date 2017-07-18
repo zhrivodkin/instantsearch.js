@@ -13,7 +13,8 @@ describe('hits defaultTemplates', () => {
       },
     };
 
-    const expected = `{
+    const expected =
+`{
   "hello": "there,",
   "how": {
     "are": "you?"

@@ -14,7 +14,7 @@ export class RawSelector extends React.Component {
   }
 
   render() {
-    const { currentValue, options } = this.props;
+    const {currentValue, options} = this.props;
 
     return (
       <select
@@ -26,9 +26,8 @@ export class RawSelector extends React.Component {
           <option
             className={this.props.cssClasses.item}
             key={option.label + option.value}
-            value={option.value}
-          >
-            {option.label}
+            value={option.value}>
+              {option.label}
           </option>
         )}
       </select>
@@ -47,10 +46,16 @@ RawSelector.propTypes = {
       PropTypes.arrayOf(PropTypes.string),
     ]),
   }),
-  currentValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  currentValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]),
       label: PropTypes.string.isRequired,
     })
   ).isRequired,

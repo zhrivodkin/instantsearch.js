@@ -22,10 +22,12 @@ const renderer = ({
   transformData,
   templates,
   renderState,
-}) => (
-  { createURL, items, refine, instantSearchInstance },
-  isFirstRendering
-) => {
+}) => ({
+  createURL,
+  items,
+  refine,
+  instantSearchInstance,
+}, isFirstRendering) => {
   if (isFirstRendering) {
     renderState.templateProps = prepareTemplateProps({
       transformData,
@@ -147,22 +149,20 @@ hierarchicalMenu({
  *   })
  * );
  */
-export default function hierarchicalMenu(
-  {
-    container,
-    attributes,
-    separator = ' > ',
-    rootPath = null,
-    showParentLevel = true,
-    limit = 10,
-    sortBy = ['name:asc'],
-    cssClasses: userCssClasses = {},
-    autoHideContainer = true,
-    templates = defaultTemplates,
-    collapsible = false,
-    transformData,
-  } = {}
-) {
+export default function hierarchicalMenu({
+  container,
+  attributes,
+  separator = ' > ',
+  rootPath = null,
+  showParentLevel = true,
+  limit = 10,
+  sortBy = ['name:asc'],
+  cssClasses: userCssClasses = {},
+  autoHideContainer = true,
+  templates = defaultTemplates,
+  collapsible = false,
+  transformData,
+} = {}) {
   if (!container || !attributes || !attributes.length) {
     throw new Error(usage);
   }

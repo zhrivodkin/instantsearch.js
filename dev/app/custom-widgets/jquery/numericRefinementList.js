@@ -1,18 +1,16 @@
 /* eslint-disable import/default */
 import instantsearch from '../../../../index.js';
 
-const renderFn = (
-  {
-    items,
-    refine,
-    widgetParams: {
-      containerNode,
-      attributeName,
-      title = 'Numeric refinement list',
-    },
+const renderFn = ({
+  createURL,
+  items,
+  refine,
+  widgetParams: {
+    containerNode,
+    attributeName,
+    title = 'Numeric refinement list',
   },
-  isFirstRendering
-) => {
+}, isFirstRendering) => {
   if (isFirstRendering) {
     const markup = `
       <div class="facet-title">${title}</div>
@@ -22,12 +20,11 @@ const renderFn = (
   }
 
   // remove event listeners if any before attachign new ones
-  containerNode.find('li[data-refine-value]').each(function() {
-    window.$(this).off();
-  });
+  containerNode
+    .find('li[data-refine-value]')
+    .each(function() { window.$(this).off(); });
 
-  const list = items.map(
-    item => `
+  const list = items.map(item => `
     <li
       class="facet-value clearfix"
       data-refine-value="${item.value}"
@@ -44,19 +41,22 @@ const renderFn = (
         ${item.label}
       </label>
     </li>
-  `
-  );
+  `);
 
-  containerNode.find('ul').html(list);
+  containerNode
+    .find('ul')
+    .html(list);
 
-  containerNode.find('li[data-refine-value]').each(function() {
-    window.$(this).on('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
+  containerNode
+    .find('li[data-refine-value]')
+    .each(function() {
+      window.$(this).on('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
 
-      refine(window.$(this).data('refine-value'));
+        refine(window.$(this).data('refine-value'));
+      });
     });
-  });
 };
 
 export default instantsearch.connectors.connectNumericRefinementList(renderFn);

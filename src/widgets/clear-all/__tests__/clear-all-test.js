@@ -17,17 +17,13 @@ describe('clearAll()', () => {
   let createURL;
 
   beforeEach(() => {
-    ReactDOM = { render: sinon.spy() };
+    ReactDOM = {render: sinon.spy()};
     createURL = sinon.stub().returns('#all-cleared');
 
     clearAll.__Rewire__('ReactDOM', ReactDOM);
 
     container = document.createElement('div');
-    widget = clearAll({
-      container,
-      autoHideContainer: true,
-      cssClasses: { root: ['root', 'cx'] },
-    });
+    widget = clearAll({container, autoHideContainer: true, cssClasses: {root: ['root', 'cx']}});
 
     results = {};
     helper = {
@@ -54,7 +50,7 @@ describe('clearAll()', () => {
         templates: defaultTemplates,
         templatesConfig: {},
         transformData: undefined,
-        useCustomCompileOptions: { header: false, footer: false, link: false },
+        useCustomCompileOptions: {header: false, footer: false, link: false},
       },
       url: '#all-cleared',
     };
@@ -79,32 +75,13 @@ describe('clearAll()', () => {
     });
 
     it('calls twice ReactDOM.render(<ClearAll props />, container)', () => {
-      widget.render({
-        results,
-        helper,
-        state: helper.state,
-        createURL,
-        instantSearchInstance: {},
-      });
-      widget.render({
-        results,
-        helper,
-        state: helper.state,
-        createURL,
-        instantSearchInstance: {},
-      });
+      widget.render({results, helper, state: helper.state, createURL, instantSearchInstance: {}});
+      widget.render({results, helper, state: helper.state, createURL, instantSearchInstance: {}});
 
-      expect(ReactDOM.render.calledTwice).toBe(
-        true,
-        'ReactDOM.render called twice'
-      );
-      expect(ReactDOM.render.firstCall.args[0]).toEqualJSX(
-        <ClearAll {...getProps()} />
-      );
+      expect(ReactDOM.render.calledTwice).toBe(true, 'ReactDOM.render called twice');
+      expect(ReactDOM.render.firstCall.args[0]).toEqualJSX(<ClearAll {...getProps()} />);
       expect(ReactDOM.render.firstCall.args[1]).toEqual(container);
-      expect(ReactDOM.render.secondCall.args[0]).toEqualJSX(
-        <ClearAll {...getProps()} />
-      );
+      expect(ReactDOM.render.secondCall.args[0]).toEqualJSX(<ClearAll {...getProps()} />);
       expect(ReactDOM.render.secondCall.args[1]).toEqual(container);
     });
   });
@@ -117,20 +94,13 @@ describe('clearAll()', () => {
     });
 
     it('calls twice ReactDOM.render(<ClearAll props />, container)', () => {
-      widget.render({ results, helper, state: helper.state, createURL });
-      widget.render({ results, helper, state: helper.state, createURL });
+      widget.render({results, helper, state: helper.state, createURL});
+      widget.render({results, helper, state: helper.state, createURL});
 
-      expect(ReactDOM.render.calledTwice).toBe(
-        true,
-        'ReactDOM.render called twice'
-      );
-      expect(ReactDOM.render.firstCall.args[0]).toEqualJSX(
-        <ClearAll {...getProps()} />
-      );
+      expect(ReactDOM.render.calledTwice).toBe(true, 'ReactDOM.render called twice');
+      expect(ReactDOM.render.firstCall.args[0]).toEqualJSX(<ClearAll {...getProps()} />);
       expect(ReactDOM.render.firstCall.args[1]).toEqual(container);
-      expect(ReactDOM.render.secondCall.args[0]).toEqualJSX(
-        <ClearAll {...getProps()} />
-      );
+      expect(ReactDOM.render.secondCall.args[0]).toEqualJSX(<ClearAll {...getProps()} />);
       expect(ReactDOM.render.secondCall.args[1]).toEqual(container);
     });
   });
