@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.0.2/dist/instantsearch.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.0.2/dist/instantsearch-theme-algolia.min.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <title>no-result-current-filters</title>
+  </head>
+  <body>
+    <div class="topbar">
+      <a href="/" class="title">No results with current filters</a>
+    </div>
+
+    <div class="wrapper">
+      <div class="left">
+        <div id="brand"></div>
+      </div>
+      <div class="right">
+        <div id="search-box">
+          <!-- SearchBox widget will appear here -->
+        </div>
+
+        <div>
+          <p>There were no results found for your request</p>
+          <div id="currentFilters"></div>
+        </div>
+
+        <div id="hits">
+          <!-- Hits widget will appear here -->
+        </div>
+
+        <div id="pagination">
+          <!-- Pagination widget will appear here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- js -->
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.0.2/dist/instantsearch.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
