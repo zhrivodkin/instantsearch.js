@@ -32,6 +32,7 @@ export { default as connectRange } from './range/connectRange.js';
 export {
   default as connectRefinementList,
 } from './refinement-list/connectRefinementList.js';
+export { default as connectRefresh } from './refresh/connectRefresh.js';
 export { default as connectSearchBox } from './search-box/connectSearchBox.js';
 export {
   default as connectSortBySelector,
