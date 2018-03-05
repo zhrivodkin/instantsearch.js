@@ -87,8 +87,6 @@ breadcrumb({
  * @typedef {Object} BreadcrumbWidgetOptions
  * @property {string|HTMLElement} container CSS Selector or HTMLElement to insert the widget.
  * @property {string[]} attributes Array of attributes to use to generate the breadcrumb.
- *
- * You can also use a sort function that behaves like the standard Javascript [compareFunction](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#Syntax).
  * @property {BreadcrumbTemplates} [templates] Templates to use for the widget.
  * @property {BreadcrumbTransforms} [transformData] Set of functions to transform the data passed to the templates.
  * @property {boolean} [autoHideContainer=true] Hides the container when there are no items in the breadcrumb.
