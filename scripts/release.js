@@ -2,6 +2,7 @@
 
 /* eslint-disable no-process-exit */
 /* eslint-disable import/no-commonjs */
+/* eslint-disable no-console */
 
 const colors = require('colors/safe');
 const inquirer = require('inquirer');
